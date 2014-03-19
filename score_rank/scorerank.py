@@ -32,14 +32,12 @@ class ScoreRank(object):
         try:
             self.r.evalsha(SET_LUA_HASH, 3, self.USER_SCORE_HASH_KEY, self.SCORE_RANK_ZSET_KEY, self.SCORE_USER_HASH_KEY, user_id, add_score)
         except Exception as e:
-            print e
             self.r.eval(SET_LUA, 3, self.USER_SCORE_HASH_KEY, self.SCORE_RANK_ZSET_KEY, self.SCORE_USER_HASH_KEY, user_id, add_score)
 
     def query(self, user_id):
         try:
             res = self.r.evalsha(QUERY_LUA_HASH, 3, self.USER_SCORE_HASH_KEY, self.SCORE_RANK_ZSET_KEY, self.SCORE_USER_HASH_KEY, user_id)
         except Exception as e:
-            print e
             res = self.r.eval(QUERY_LUA, 3, self.USER_SCORE_HASH_KEY, self.SCORE_RANK_ZSET_KEY, self.SCORE_USER_HASH_KEY, user_id)
 
         if res:
@@ -50,7 +48,6 @@ class ScoreRank(object):
         try:
             res = self.r.evalsha(STATS_LUA_HASH, 2, self.SCORE_RANK_ZSET_KEY, self.SCORE_USER_HASH_KEY)
         except Exception as e:
-            print e
             res = self.r.eval(STATS_LUA, 2, self.SCORE_RANK_ZSET_KEY, self.SCORE_USER_HASH_KEY)
 
         if res:
